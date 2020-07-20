@@ -25,7 +25,6 @@ export class ItemsController {
 
     @Post()
     create(@Body() createItemDto: CreateItemDto) : Promise<Item> {
-        // have to cast the createItemDto
         return this.itemsService.create(createItemDto);
         // return {"status":"Item created OK!", created: createItemDto}
     }

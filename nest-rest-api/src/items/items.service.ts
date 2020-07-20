@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ItemModel } from './schemas/item.schema';
 import  Item  from './interfaces/item.interface';
-import { Model } from 'mongoose';
+import { Model, Document } from 'mongoose';
 import {InjectModel} from "@nestjs/mongoose";
 import { CreateItemDto } from './dto/create-item.dto';
+
+// for Mongoose models to work with interface
+interface ItemModel extends Document, Item {};
+
 @Injectable()
 export class ItemsService {
  
