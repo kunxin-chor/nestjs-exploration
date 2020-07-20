@@ -12,20 +12,22 @@ export class ItemsController {
 
     // The @Get() operatorassociate '/items' with the findAll() method
     @Get()
-    findAll() : Item[] {
+    async findAll() : Promise<Item[]> {
         // JavaScript objects are automatically returned as JSON
         return this.itemsService.findAll();
     }
 
     // Routes with parameters
     @Get(':id')
-    findOne(@Param() param) : Item {
+    async findOne(@Param() param) : Promise<Item> {
         return this.itemsService.findOne(param.id);
     }
 
     @Post()
-    create(@Body() createItemDto: CreateItemDto) : object {
-        return {"status":"Item created OK!", created: createItemDto}
+    create(@Body() createItemDto: CreateItemDto) : Promise<Item> {
+        // have to cast the createItemDto
+        return this.itemsService.create(createItemDto);
+        // return {"status":"Item created OK!", created: createItemDto}
     }
 
     @Delete()
