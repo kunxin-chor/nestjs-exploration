@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, Body, Param } from '@nestjs/common';
 import { CreateItemDto } from "./dto/create-item.dto";
 
 @Controller('items')
@@ -18,9 +18,32 @@ export class ItemsController {
         }
     }
 
+    // Routes with parameters
+    @Get(':id')
+    findOne(@Param() param) : object {
+        return {
+            "id": param.id 
+        }
+    }
+
     @Post()
     create(@Body() createItemDto: CreateItemDto) : object {
         return {"status":"Item created OK!", created: createItemDto}
+    }
+
+    @Delete()
+    delete(@Param('id') id) : object {
+        return {
+            "status": `Object with ${id} has been deleted!`
+        }
+    }
+
+    @Put()
+    update(@Body() updateItemDto: CreateItemDto) : object {
+        return {
+            status:"Object has been updated!",
+            updatedTo: updateItemDto
+        }
     }
 
 }
