@@ -1,29 +1,26 @@
 import { Controller, Get, Post, Delete, Put, Body, Param } from '@nestjs/common';
 import { CreateItemDto } from "./dto/create-item.dto";
+import { ItemsService } from './items.service';
+import Item from './interfaces/item.interface';
 
 @Controller('items')
 export class ItemsController {
 
+    constructor(private readonly itemsService:ItemsService) {
+
+    }
+
     // The @Get() operatorassociate '/items' with the findAll() method
     @Get()
-    findAll() : object {
+    findAll() : Item[] {
         // JavaScript objects are automatically returned as JSON
-        return {
-            items:[
-                {
-                    id:1,
-                    name:"The One Ring replica"
-                }
-            ]
-        }
+        return this.itemsService.findAll();
     }
 
     // Routes with parameters
     @Get(':id')
-    findOne(@Param() param) : object {
-        return {
-            "id": param.id 
-        }
+    findOne(@Param() param) : Item {
+        return this.itemsService.findOne(param.id);
     }
 
     @Post()
